@@ -1,4 +1,5 @@
 import './style.css';
+import { registerSW } from 'virtual:pwa-register';
 import { sb, testConnection } from './lib/supabaseClient.js';
 import { state } from './state.js';
 import { loadSettingsOnly } from './services/dataService.js';
