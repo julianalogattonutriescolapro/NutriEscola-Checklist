@@ -104,10 +104,21 @@ function attachShellEvents() {
 }
 
 const TITLE_MAP = {
-  dashboard: 'Dashboard', escolas: 'Escolas', escolaDetalhe: 'Escola', novaVisita: 'Nova Visita',
-  historico: 'Histórico de Visitas', relatorios: 'Relatórios', relatorioDetalhe: 'Relatório', fotografias: 'Fotografias',
-  cardapios: 'Cardápio Mensal', pendencias: 'Pendências e Plano de Ação', indicadores: 'Indicadores',
-  assistenteIA: 'Assistente IA', admin: 'Administração do Sistema', pesquisa: 'Pesquisa',
+  dashboard: 'Dashboard',
+  escolas: 'Escolas',
+  escolaDetalhe: 'Escola',
+  novaVisita: 'Nova Visita',
+  minhasVisitas: 'Minhas Visitas',
+  historico: 'Histórico de Visitas',
+  relatorios: 'Relatórios',
+  relatorioDetalhe: 'Relatório',
+  fotografias: 'Fotografias',
+  cardapios: 'Cardápio Mensal',
+  pendencias: 'Pendências e Plano de Ação',
+  indicadores: 'Indicadores',
+  assistenteIA: 'Assistente IA',
+  admin: 'Administração do Sistema',
+  pesquisa: 'Pesquisa',
 };
 
 async function renderView() {

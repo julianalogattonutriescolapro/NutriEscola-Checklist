@@ -240,12 +240,18 @@ async function finalizeVisit(root) {
       await sb.from('action_plans').insert(plansPayload);
     }
 
-    await log('finalize_visit', school.name);
+        await log('finalize_visit', school.name);
     await loadAll();
-    toast('Visita finalizada e salva no banco de dados. Relatório e Dashboard atualizados automaticamente.');
+
+    toast('Visita finalizada com sucesso.');
+
     draftVisit = null;
-    if (state.user.role === 'admin') nav('relatorioDetalhe', { visitId: visitRow.id });
-    else nav('novaVisita');
+
+    if (state.user.role === 'admin') {
+        nav('relatorioDetalhe', { visitId: visitRow.id });
+    } else {
+        nav('minhasVisitas');
+    }
   } catch (e) {
     console.error(e);
     toast('Erro ao finalizar visita: ' + e.message, true);

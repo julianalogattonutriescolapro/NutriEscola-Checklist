@@ -6,15 +6,75 @@ import { generateVisitAISummary } from '../lib/ai.js';
 import { nav, render } from '../router.js';
 
 export function viewHistorico(root) {
-  let list = DB.visits.filter((v) => v.status === 'finalizada').sort((a, b) => b.date.localeCompare(a.date));
-  if (state.params.schoolId) list = list.filter((v) => v.schoolId === state.params.schoolId);
-  root.innerHTML = `<div class="card"><table><thead><tr><th>Escola</th><th>Data</th><th>Nutricionista</th><th>Classificação</th><th>Não Conf.</th><th></th></tr></thead>
-    <tbody>${list.length ? list.map((v) => {
-      const s = schoolById(v.schoolId); const c = classify(computeClassificationFromChecklist(v.checklist).pct);
-      const nc = (v.checklist || []).filter((i) => i.status === 'nc').length;
-      return `<tr><td>${esc(s ? s.name : '—')}</td><td>${fmtDate(v.date)}</td><td>${esc(v.nutritionist)}</td><td><span class="pill ${c.cls}">${c.dot} ${c.label}</span></td><td>${nc}</td><td><button class="btn btn-ghost btn-sm" data-open="${v.id}">Ver relatório →</button></td></tr>`;
-    }).join('') : `<tr><td colspan="6"><div class="empty">Nenhuma visita registrada.</div></td></tr>`}</tbody></table></div>`;
-  root.querySelectorAll('[data-open]').forEach((b) => (b.onclick = () => nav('relatorioDetalhe', { visitId: b.dataset.open })));
+  let list = DB.visits
+    .filter((v) => v.status === 'finalizada');
+
+  // Se for nutricionista, mostra apenas as próprias visitas
+  if (state.user.role === 'nutricionista') {
+    list = list.filter((v) => v.nutritionist === state.user.name);
+  }
+
+  // Se vier filtrando por escola, mantém o filtro
+  if (state.params.schoolId) {
+    list = list.filter((v) => v.schoolId === state.params.schoolId);
+  }
+
+  list.sort((a, b) => b.date.localeCompare(a.date));
+
+  root.innerHTML = `
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Escola</th>
+            <th>Data</th>
+            <th>Classificação</th>
+            <th>Não Conformidades</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${
+            list.length
+              ? list
+                  .map((v) => {
+                    const s = schoolById(v.schoolId);
+                    const c = classify(
+                      computeClassificationFromChecklist(v.checklist).pct
+                    );
+                    const nc = (v.checklist || []).filter(
+                      (i) => i.status === 'nc'
+                    ).length;
+
+                    return `
+                      <tr>
+                        <td>${esc(s ? s.name : '—')}</td>
+                        <td>${fmtDate(v.date)}</td>
+                        <td><span class="pill ${c.cls}">${c.dot} ${c.label}</span></td>
+                        <td>${nc}</td>
+                        <td>
+                          <button class="btn btn-ghost btn-sm" data-open="${v.id}">
+                            Visualizar
+                          </button>
+                        </td>
+                      </tr>
+                    `;
+                  })
+                  .join('')
+              : `<tr><td colspan="5"><div class="empty">Nenhuma visita encontrada.</div></td></tr>`
+          }
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  root.querySelectorAll("[data-open]").forEach((b) => {
+    b.onclick = () =>
+      nav("relatorioDetalhe", {
+        visitId: b.dataset.open,
+        readonly: true,
+      });
+  });
 }
 
 export function viewRelatorios(root) {
@@ -130,7 +190,13 @@ export function viewRelatorioDetalhe(root) {
       </div>
     </div>`;
 
-  document.getElementById('btnBack').onclick = () => nav('relatorios', { schoolId: v.schoolId });
+  document.getElementById('btnBack').onclick = () => {
+  if (state.user.role === 'admin') {
+    nav('relatorios', { schoolId: v.schoolId });
+  } else {
+    nav('minhasVisitas');
+  }
+};
   document.getElementById('btnPrint').onclick = () => window.print();
   document.getElementById('btnShareWhats').onclick = () => window.open(`https://wa.me/?text=${encodeURIComponent(`Relatório técnico — ${s ? s.name : ''} — ${fmtDate(v.date)} — Classificação: ${cls.label}`)}`, '_blank');
   document.getElementById('btnShareMail').onclick = () => {

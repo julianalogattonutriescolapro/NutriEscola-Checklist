@@ -5,6 +5,15 @@ import { state } from './state.js';
 import { loadSettingsOnly } from './services/dataService.js';
 import { afterAuth } from './pages/auth.js';
 import { render } from './router.js';
+registerSW({
+  immediate: true,
+  onOfflineReady() {
+    console.log('NutriEscola disponível offline.');
+  },
+  onNeedRefresh() {
+    console.log('Nova versão disponível.');
+  }
+});
 
 (async function init() {
   const ok = await testConnection();

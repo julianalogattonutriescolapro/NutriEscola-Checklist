@@ -60,11 +60,11 @@ export const REFEICOES = [
   ['afternoonSnack', '🍎 Lanche da tarde'],
   ['dinner', '🍲 Jantar'],
 ];
-export const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 export const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', ic: '🏠', roles: ['admin'] },
   { id: 'escolas', label: 'Escolas', ic: '🏫', roles: ['admin'] },
   { id: 'novaVisita', label: 'Nova Visita', ic: '📋', roles: ['admin', 'nutricionista'] },
+  { id: 'minhasVisitas', label: 'Minhas Visitas', ic: '📖', roles: ['nutricionista'] },
   { id: 'historico', label: 'Histórico', ic: '📖', roles: ['admin'] },
   { id: 'relatorios', label: 'Relatórios', ic: '📄', roles: ['admin'] },
   { id: 'fotografias', label: 'Fotografias', ic: '📷', roles: ['admin'] },
@@ -72,6 +72,5 @@ export const MENU_ITEMS = [
   { id: 'pendencias', label: 'Pendências', ic: '⚠️', roles: ['admin'] },
   { id: 'indicadores', label: 'Indicadores', ic: '📊', roles: ['admin'] },
   { id: 'assistenteIA', label: 'Assistente IA', ic: '🤖', roles: ['admin'] },
-  { id: 'admin', label: 'Administração', ic: '⚙', roles: ['admin'] },
+  { id: 'admin', label: 'Administração', ic: '⚙️', roles: ['admin'] },
 ];
-export const ADMIN_ONLY_VIEWS = ['dashboard', 'escolas', 'escolaDetalhe', 'historico', 'relatorios', 'relatorioDetalhe', 'fotografias', 'cardapios', 'pendencias', 'indicadores', 'assistenteIA', 'admin', 'pesquisa'];
