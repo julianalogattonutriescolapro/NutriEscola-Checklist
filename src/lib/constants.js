@@ -60,6 +60,7 @@ export const REFEICOES = [
   ['afternoonSnack', '🍎 Lanche da tarde'],
   ['dinner', '🍲 Jantar'],
 ];
+export const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 export const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', ic: '🏠', roles: ['admin'] },
   { id: 'escolas', label: 'Escolas', ic: '🏫', roles: ['admin'] },
@@ -73,4 +74,20 @@ export const MENU_ITEMS = [
   { id: 'indicadores', label: 'Indicadores', ic: '📊', roles: ['admin'] },
   { id: 'assistenteIA', label: 'Assistente IA', ic: '🤖', roles: ['admin'] },
   { id: 'admin', label: 'Administração', ic: '⚙️', roles: ['admin'] },
+];
+
+export const ADMIN_ONLY_VIEWS = [
+  'dashboard',
+  'escolas',
+  'escolaDetalhe',
+  'historico',
+  'relatorios',
+  'relatorioDetalhe',
+  'fotografias',
+  'cardapios',
+  'pendencias',
+  'indicadores',
+  'assistenteIA',
+  'admin',
+  'pesquisa'
 ];
